@@ -17,10 +17,10 @@ log_console_handler.setFormatter(log_formatter)
 logger.addHandler(log_console_handler)
 
 # Set up the gear data
-lenses = [{'name': 'John S', 'tag': 'John S'},
+lenses = [{'name': 'John S', 'tag': 'JohnS'},
           {'name': 'Jane',   'tag': 'Jimmy'},
           {'name': 'Jimmy',  'tag': 'Jimmy'},
-          {'name': 'KaimalMarkII', 'tag': 'Kaimal Mark II'}]
+          {'name': 'Kaimal Mark II', 'tag': 'KaimalMarkII'}]
 
 films = [{'name': 'Blanko', 'tag': 'Blanko'},
          {'name': 'Ina''s 1969', 'tag': 'Inas1969'},
