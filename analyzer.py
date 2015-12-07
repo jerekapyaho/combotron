@@ -134,7 +134,17 @@ films = [{'name': 'Blanko', 'tag': 'Blanko'},
 flashes = [{'name': 'Standard', 'tag': 'Standard'},
            {'name': 'Dreampop', 'tag': 'Dreampop'},
            {'name': 'Cherry Shine', 'tag': 'CherryShine'},
-           {'name': 'Cadet Blue Gel', 'tag': 'CadetBlueGel'}]
+           {'name': 'Cadet Blue Gel', 'tag': 'CadetBlueGel'},
+           {'name': 'Spiro Gel', 'tag': 'SpiroGel'},
+           {'name': 'Cubic Gel', 'tag': 'CubicGel'},
+           {'name': 'Triad Gel', 'tag': 'TriadGel'},
+           {'name': 'Triple Crown', 'tag': 'TripleCrown'},
+           {'name': 'Jolly Rainbo 2X', 'tag': 'JollyRainbo2X'},
+           {'name': 'Berry Pop', 'tag': 'BerryPop'},
+           {'name': 'RedEye Gel', 'tag': 'RedEyeGel'},
+           {'name': 'Laser Lemon Gel', 'tag': 'LaserLemonGel'},
+           {'name': 'Tasty Pop', 'tag': 'TastyPop'},
+           {'name': 'Pop Rox', 'tag': 'PopRox'}]
 
 localized_no_flash_strings = {'en': 'No Flash',
                               'zh-Hans': '没开闪光灯',
