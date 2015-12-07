@@ -93,8 +93,23 @@ def metadata_language(md):
                 
     return lang
 
+
 part_info = {'en': [' Lens', ' Film', ' Flash'],
-             'nl': ['-lens', '-filmrol', '-flitser']}
+             'nl': ['-lens', '-filmrol', '-flitser'],
+             'fr': ['Objectif ', 'Film ', 'Flash '],
+             'de': [' Linse', ' Film', ' Blitz'],
+             'it': ['Lente ', 'Pellicola ', 'Flash '],
+             'es': ['Lente ', 'Película ', 'Flash '],
+             'pt-PT': ['Lente ', 'rolo ', 'flash '],
+             'sv': [' Lins', ' Film', ' Blixt'],
+             'pt-BR': [' Lentes', ' Filme', ' Flash'],
+             'ja': [' レンズ', ' フィルム', ' フラッシュ'],
+             'ru': [' объектив', ' пленка', ' вспышка'],
+             'id': ['Lensa ', 'Film ', 'Blitz '],      
+             'ms': [' Lensa', ' Filem', ' Lampu Kilat'],
+             'ko': [' 렌즈', ' 필름', ' 플래시'],  
+             'zh-Hans': [' 镜头', ' 胶卷', ' 闪光灯'],
+             'zh-Hant': [' 鏡頭', ' 膠片', ' 閃光燈']}
 
 # If a language is in this set, it has the gear name after the noun.
 # Otherwise the gear name comes before the noun (the majority).
