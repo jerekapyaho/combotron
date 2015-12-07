@@ -1,20 +1,11 @@
 import argparse
 import logging
 import sys
+import os
+from flask import Flask, Response, request
+import json
 
-
-# Set up logging
-logger = logging.getLogger('combotron')
-logger.setLevel(logging.DEBUG)
-
-# Create console handler and set level to debug
-log_console_handler = logging.StreamHandler()
-log_console_handler.setLevel(logging.DEBUG)
-
-# Prepare formatter for log messages
-log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-log_console_handler.setFormatter(log_formatter)
-logger.addHandler(log_console_handler)
+app = Flask(__name__)
 
 # Set up the gear data
 lenses = [{'name': 'Helga Viking', 'tag': 'HelgaViking'},
@@ -284,26 +275,70 @@ def gear_names(md, lang):
         result = extracted_names(parts, lang, name_pos)
         
     return result
+
+
+def gear_tags(names):
+
+    pass  
+
+
+@app.route('/')
+def index():
+    return 'Nothing to see here. Move along.'
     
+@app.route('/lens')
+def lens():
+    result = {'status': 'success',
+              'data': lenses}
+    js = json.dumps(result)
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Analyze the metadata of a Hipstamatic photo by parsing the Software key in the {TIFF} metadata.')
-    parser.add_argument('-m', '--model', help='The Hipstamatic model number from the {TIFF} metadata Model key')
-    parser.add_argument('-s', '--software', help='The software string from the {TIFF} metadata Software key')
-    args = parser.parse_args()
-    logger.info('Software string = "%s"' % args.software)
+@app.route('/film')
+def film():
+    result = {'status': 'success',
+              'data': films}
+    js = json.dumps(result)
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
 
-    model = int(args.model)
-    logger.info('Hipstamatic model = %d' % model)
-    if model >= 300:
-        logger.error('Cannot parse Software metadata for Hipstamatic 300 and later. Maybe later.')
-        sys.exit(-1)
-            
-    lang = metadata_language(args.software)
-    if lang != None:
-        logger.info('Metadata language = ' + lang)
-        result = gear_names(args.software, lang)
-        result['lang'] = lang
-        print(result)
+@app.route('/flash')
+def flash():
+    result = {'status': 'success',
+              'data': flashes}
+    js = json.dumps(result)
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    if request.headers['Content-Type'] == 'application/json':
+        payload = request.get_json()
+
+        model = payload['Model']
+        if model >= 300:
+            result = {'status': 'fail',
+                      'data': {'title': 'Cannot parse Software metadata for Hipstamatic 300 and later. Maybe later.'}}
+        else:
+            software = payload['Software']
+            lang = metadata_language(software)
+            if lang != None:
+                tags = gear_names(software, lang)
+                result = {'status': 'success',
+                          'data': {'tags': tags, 'lang': lang}}
+            else:
+                result = {'status': 'fail',
+                          'data': {'title': 'No language determined, maybe bad metadata?'}}
     else:
-        print('No language determined, maybe bad metadata?')
+        message = 'No JSON payload found in request.'
+        app.logger.error(message)
+        result = {'status': 'fail',
+                  'data': {'title': message}}
+    
+    js = json.dumps(result)
+    
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
+    
+if __name__ == '__main__':
+    app.run()
